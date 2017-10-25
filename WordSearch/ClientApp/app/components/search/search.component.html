@@ -1,0 +1,18 @@
+<h1>Thesaurus results</h1>
+
+<input #searchBox placeholder="Enter a search term" type="text" [(ngModel)]="query" (ngModelChange)="onFieldChange($event)" />
+<p *ngIf="searching">Loading...</p>
+<table class='table' *ngIf="results">
+    <thead>
+        <tr>
+            <th>Category</th>
+            <th>Synonyms</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let result of results">
+            <td>{{ result.category }}</td>
+            <td>{{ result.synonyms }}</td>
+        </tr>
+    </tbody>
+</table>
