@@ -1,7 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.SpaServices.Webpack;
@@ -30,6 +27,7 @@ namespace WordSearch
             services.AddMvc();
 
             services.AddSingleton<IThesaurusService, ThesaurusService>();
+            services.AddSingleton<IDictionaryService, DictionaryService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

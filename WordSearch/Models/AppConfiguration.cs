@@ -6,5 +6,6 @@ namespace WordSearch.Models
     {
         public String GoogleCustomSearchKey { get; set; }
         public String ThesaurusApiKey { get; set; }
+        public String DictionaryApiKey { get; set; }
     }
 }

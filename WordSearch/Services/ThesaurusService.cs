@@ -15,13 +15,13 @@ namespace WordSearch.Services
     {
         private Uri endpoint = new Uri("http://thesaurus.altervista.org/thesaurus/v1");
 
-        public async Task<IList<ThesaurusItem>> GetSynonymsAsync(AppConfiguration config, String search)
+        public async Task<IList<ThesaurusItem>> GetSynonymsAsync(AppConfiguration config, String query)
         {
             String language = "en_US";
             using (var client = new HttpClient())
             {
                 client.BaseAddress = endpoint;
-                var response = await client.GetAsync($"?key={HttpUtility.UrlEncode(config.ThesaurusApiKey)}&word={HttpUtility.UrlEncode(search.Trim())}&language={HttpUtility.UrlEncode(language)}&output=json");
+                var response = await client.GetAsync($"?key={HttpUtility.UrlEncode(config.ThesaurusApiKey)}&word={HttpUtility.UrlEncode(query.Trim())}&language={HttpUtility.UrlEncode(language)}&output=json");
                 response.EnsureSuccessStatusCode();
 
                 var result = await response.Content.ReadAsStringAsync();

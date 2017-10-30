@@ -9,10 +9,11 @@ import 'rxjs/add/operator/distinctUntilChanged';
     templateUrl: './search.component.html'
 })
 export class SearchComponent {
-    public results: SearchResult[] | null;
+    public result: SearchResult | null;
     private query = "";
     private queryChanged: Subject<string> = new Subject<string>();
     private searching: boolean = false;
+    private firstLoad: boolean = true;
     private http: Http;
     private baseUrl: string;
 
@@ -33,10 +34,11 @@ export class SearchComponent {
     }
 
     search(term: string) {
-        this.results = null;
+        this.result = null;
         this.searching = true;
-        this.http.get(`${this.baseUrl}api/thesaurus/${term}`).subscribe(result => {
-            this.results = result.json() as SearchResult[];
+        this.firstLoad = false;
+        this.http.get(`${this.baseUrl}api/search/${term}`).subscribe(result => {
+            this.result = result.json() as SearchResult;
             this.searching = false;
         }, error => {
             console.error(error);
@@ -45,7 +47,27 @@ export class SearchComponent {
     }
 }
 
-interface SearchResult {
+interface ThesaurusEntry {
     category: string;
     synonyms: string;
+    synonymList: Array<string>;
+}
+
+interface Definition {
+    serialNumber: string;
+    definingText: string;
+}
+
+interface DictionaryEntry {
+    headword: string;
+    wav: string;
+    functionalLabel: string;
+    date: string;
+    wavUrl: string;
+    definitions: Array<Definition>;
+}
+
+interface SearchResult {
+    dictionaryEntries: Array<DictionaryEntry>;
+    thesaurusEntries: Array<ThesaurusEntry>;
 }

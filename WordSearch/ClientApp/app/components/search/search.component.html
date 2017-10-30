@@ -1,18 +1,52 @@
-<h1>Thesaurus results</h1>
-
+<h1>Search results</h1>
+<p>Searches for definitions and synonyms for the given word.</p>
 <input #searchBox placeholder="Enter a search term" type="text" [(ngModel)]="query" (ngModelChange)="onFieldChange($event)" />
 <p *ngIf="searching">Loading...</p>
-<table class='table' *ngIf="results">
-    <thead>
-        <tr>
-            <th>Category</th>
-            <th>Synonyms</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor="let result of results">
-            <td>{{ result.category }}</td>
-            <td>{{ result.synonyms }}</td>
-        </tr>
-    </tbody>
-</table>
+<div *ngIf="!firstLoad && !searching && !result">No results found.</div>
+<div *ngIf="result">
+    <h3>Definitions</h3>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Headword</th>
+                <th>Sound</th>
+                <th>Functional Label</th>
+                <th>Date</th>
+                <th>Definitions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let res of result.dictionaryEntries">
+                <td>{{ res.headword }}</td>
+                <td><audio controls src="{{ res.wavUrl }}" *ngIf="res.wavUrl">Your browser does not support the <code>audio</code> element.</audio></td>
+                <td>{{ res.functionalLabel }}</td>
+                <td>{{ res.date }}</td>
+                <td>
+                    <ul>
+                        <li *ngFor="let def of res.definitions">{{ def.definingText }}</li>
+                    </ul>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <hr />
+    <h3>Synonyms</h3>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Category</th>
+                <th>Synonyms</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let res of result.thesaurusEntries">
+                <td>{{ res.category }}</td>
+                <td>
+                    <ul>
+                        <li *ngFor="let synonym of res.synonymList">{{ synonym }}</li>
+                    </ul>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

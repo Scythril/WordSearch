@@ -8,6 +8,6 @@ namespace WordSearch.Services.Interfaces
 {
     public interface IThesaurusService
     {
-        Task<IList<ThesaurusItem>> GetSynonymsAsync(AppConfiguration config, String search);
+        Task<IList<ThesaurusItem>> GetSynonymsAsync(AppConfiguration config, String query);
     }
 }

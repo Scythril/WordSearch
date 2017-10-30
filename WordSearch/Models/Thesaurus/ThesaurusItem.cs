@@ -8,11 +8,9 @@ namespace WordSearch.Models.Thesaurus
     public class ThesaurusItem
     {
         public String Category { get; set; }
-
         public String Synonyms { get; set; }
 
-        [JsonIgnore]
-        public IList<String> GetSynonyms {
+        public IList<String> SynonymList {
             get
             {
                 return Synonyms.Split('|');
